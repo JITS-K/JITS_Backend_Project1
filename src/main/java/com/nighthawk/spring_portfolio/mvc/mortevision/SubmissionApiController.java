@@ -28,7 +28,14 @@ public class SubmissionApiController {
         return new ResponseEntity<>(submission, HttpStatus.CREATED);
     }
 
-    
+    // @PutMapping("/comment")
+    // public ResponseEntity<Submission> comment(@PathVariable long id, String comment) {
+
+    //     repository_sub.save(submission);
+    //     return new ResponseEntity<>(submission, HttpStatus.CREATED);
+    // }
+
+
 
 
     

@@ -24,5 +24,7 @@ public class Submission {
     private String submission_time;
 
     private String assignment_name;
+
+    private String comments=null;
     
 }
