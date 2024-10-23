@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 import java.util.List;
+import java.util.ArrayList;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,6 +26,11 @@ public class Submission {
 
     private String assignment_name;
 
-    private String comments=null;
+    private List<String> comments;
+
+
+    public void addComment(String comment){
+        this.comments.add(comment);
+    }
     
 }

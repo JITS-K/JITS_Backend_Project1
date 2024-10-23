@@ -20,20 +20,59 @@ public class SubmissionApiController {
     // GET queue for a specific assignment
     
 
-    // GET all assignments
-
+    // adding a submission
     @PostMapping("/Submit")
     public ResponseEntity<Submission> createAssignment(@RequestBody Submission submission) {
+        System.out.println("thing");
         repository_sub.save(submission);
+        System.out.println("thing2");
         return new ResponseEntity<>(submission, HttpStatus.CREATED);
     }
+    // adding a comment
+    @PutMapping("/comment")
+    public ResponseEntity<Submission> comment(@PathVariable long id, @RequestBody String comment) {
+        Optional<Submission> optional = repository_sub.findById(id);
+        if (optional.isPresent()) {
+            Submission submission = optional.get();
+            submission.addComment(comment);
+            repository_sub.save(submission);
+            return new ResponseEntity<>(submission, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
-    // @PutMapping("/comment")
-    // public ResponseEntity<Submission> comment(@PathVariable long id, String comment) {
 
-    //     repository_sub.save(submission);
-    //     return new ResponseEntity<>(submission, HttpStatus.CREATED);
-    // }
+        // GET all submissions
+    @GetMapping("/all")
+    public ResponseEntity<List<Submission>> getAllSubmissions() {
+        List<Submission> submissions = repository_sub.findAll();
+        return new ResponseEntity<>(submissions, HttpStatus.OK);
+    }
+
+    // GET a specific submission by ID
+    @GetMapping("/{id}")
+    public ResponseEntity<Submission> getSubmissionById(@PathVariable long id) {
+        Optional<Submission> optional = repository_sub.findById(id);
+        if (optional.isPresent()) {
+            return new ResponseEntity<>(optional.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    // DELETE a submission
+    @DeleteMapping("/{id}")
+    public ResponseEntity<HttpStatus> deleteSubmission(@PathVariable long id) {
+        try {
+            repository_sub.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+
+
 
 
 
